@@ -13,7 +13,7 @@ public class Game {
     public void start() {
         board.draw();
         String location = player1.pickLocation();
-        board.redraw(player1, location);
+        board.redraw("X", location);
 
     }
 }
