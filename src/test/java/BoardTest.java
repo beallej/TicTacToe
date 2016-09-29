@@ -5,6 +5,7 @@ import java.io.PrintStream;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 /**
@@ -55,5 +56,19 @@ public class BoardTest {
         String playerSymbol2 = "O";
         board.redraw(playerSymbol2, location2);
         verify(printStream).println("X|2|3\n-----\n4|5|6\n-----\n7|O|9");
+    }
+
+    @Test
+    public void boardShouldNotAllowPlayer2ToPickOccupiedLocation() throws Exception {
+        board.redraw("X", "1");
+        board.redraw("O", "1");
+        verify(printStream, times(2)).println("X|2|3\n-----\n4|5|6\n-----\n7|8|9");
+    }
+
+    @Test
+    public void boardShouldYellAtPlayer2WhenTheyPickOccupiedLocation() throws Exception {
+        board.redraw("X", "1");
+        board.redraw("O", "1");
+        verify(printStream).println("Location already taken, try again!");
     }
 }

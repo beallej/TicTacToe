@@ -28,4 +28,6 @@ public class PlayerTest {
         when(bufferedReader.readLine()).thenReturn("1");
         assertEquals(player.pickLocation(), "1");
     }
+
+
 }
