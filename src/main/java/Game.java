@@ -12,6 +12,8 @@ public class Game {
 
     public void start() {
         board.draw();
-        player1.makeMove();
+        int location = player1.pickLocation();
+        board.redraw(player1, location);
+
     }
 }
