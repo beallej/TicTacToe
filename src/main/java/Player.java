@@ -21,11 +21,16 @@ public class Player {
     public String pickLocation() {
         printStream.println("Pick a location");
         String locationChosen = "";
-        while (!board.locationIsValid(locationChosen)){
+        boolean haveFoundValidLocation = false;
+        while (!haveFoundValidLocation){
             try {
                 locationChosen = bufferedReader.readLine();
+                haveFoundValidLocation = board.locationIsValid(locationChosen);
             } catch (IOException e) {
                 e.printStackTrace();
+            }
+            if (!haveFoundValidLocation) {
+                printStream.println("Location taken, try again!");
             }
         }
         return locationChosen;

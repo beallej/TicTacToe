@@ -35,9 +35,17 @@ public class PlayerTest {
     }
 
 
+    @Test
+    public void shouldTellPlayer2WhenPickedTakenLocation() throws Exception {
+        when(board.locationIsValid("1")).thenReturn(false);
+        when(board.locationIsValid("8")).thenReturn(true);
+        when(bufferedReader.readLine()).thenReturn("1", "8");
+        player.pickLocation();
+        verify(printStream).println("Location taken, try again!");
+    }
 
     @Test
-    public void gameShouldAllowPlayer2ToRepickAfterPickingTakenLocation() throws Exception {
+    public void shouldAllowPlayer2ToRepickAfterPickingTakenLocation() throws Exception {
         when(board.locationIsValid("1")).thenReturn(false);
         when(board.locationIsValid("8")).thenReturn(true);
         when(bufferedReader.readLine()).thenReturn("1", "8");
