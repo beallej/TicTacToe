@@ -15,6 +15,6 @@ public class Board {
         printStream.println(bd);
     }
 
-    public void redraw(Player player, int location) {
+    public void redraw(Player player, String location) {
     }
 }
