@@ -30,19 +30,32 @@ public class Board {
         printStream.println(bd);
     }
 
-    public void redraw(String playerSymbol, String location) {
+    public boolean redraw(String playerSymbol, String location) {
 
         int locationInt = Integer.valueOf(location) - 1;
         int row = locationInt / 3;
         int col = locationInt % 3;
         String currentSpaceValue = boardSpaces[row][col];
-
         if (currentSpaceValue.equals("X") || currentSpaceValue.equals("O")) {
             printStream.println("Location already taken, try again!");
-        }
-        else {
+            return false;
+        } else {
             boardSpaces[row][col] = playerSymbol;
+            draw();
+            return true;
         }
-        draw();
+
+    }
+
+    public boolean locationIsValid(String location) {
+        int locationInt = Integer.valueOf(location) - 1;
+        int row = locationInt / 3;
+        int col = locationInt % 3;
+        String currentSpaceValue = boardSpaces[row][col];
+        if (currentSpaceValue.equals("X") || currentSpaceValue.equals("O")) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

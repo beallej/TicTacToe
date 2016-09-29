@@ -1,12 +1,11 @@
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.verification.VerificationMode;
 
 import java.io.PrintStream;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by jbealle on 9/29/16.
@@ -62,7 +61,7 @@ public class BoardTest {
     public void boardShouldNotAllowPlayer2ToPickOccupiedLocation() throws Exception {
         board.redraw("X", "1");
         board.redraw("O", "1");
-        verify(printStream, times(2)).println("X|2|3\n-----\n4|5|6\n-----\n7|8|9");
+        verify(printStream, never()).println("O|2|3\n-----\n4|5|6\n-----\n7|8|9");
     }
 
     @Test
@@ -71,4 +70,6 @@ public class BoardTest {
         board.redraw("O", "1");
         verify(printStream).println("Location already taken, try again!");
     }
+
+
 }
