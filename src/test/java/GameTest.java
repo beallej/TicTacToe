@@ -41,7 +41,7 @@ public class GameTest {
     public void gameShouldRedrawBoardAfterPlayer1PicksLocation() throws Exception {
         when(player1.pickLocation()).thenReturn("1");
         game.start();
-        verify(board).redraw("X", "1");
+        verify(board).placePlayerSymbolOnBoard("X", "1");
     }
 
     @Test
@@ -56,7 +56,7 @@ public class GameTest {
         when(player1.pickLocation()).thenReturn("1");
         when(player2.pickLocation()).thenReturn("8");
         game.start();
-        verify(board).redraw("O", "8");
+        verify(board).placePlayerSymbolOnBoard("O", "8");
     }
 
 

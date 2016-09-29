@@ -15,9 +15,9 @@ public class Game {
     public void start() {
         board.draw();
         String location = player1.pickLocation();
-        board.redraw("X", location);
+        board.placePlayerSymbolOnBoard("X", location);
         location = player2.pickLocation();
-        board.redraw("O", location);
+        board.placePlayerSymbolOnBoard("O", location);
 
     }
 }

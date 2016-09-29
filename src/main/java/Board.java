@@ -1,3 +1,5 @@
+import javafx.util.Pair;
+
 import java.io.PrintStream;
 
 /**
@@ -30,32 +32,36 @@ public class Board {
         printStream.println(bd);
     }
 
-    public boolean redraw(String playerSymbol, String location) {
+    public void placePlayerSymbolOnBoard(String playerSymbol, String location) {
 
+        Pair<Integer, Integer> boardLocation = parseLocationFromInput(location);
+        int row = boardLocation.getKey();
+        int col = boardLocation.getValue();
+        boardSpaces[row][col] = playerSymbol;
+        draw();
+    }
+
+    public Pair<Integer, Integer> parseLocationFromInput(String location){
         int locationInt = Integer.valueOf(location) - 1;
         int row = locationInt / 3;
         int col = locationInt % 3;
-        String currentSpaceValue = boardSpaces[row][col];
-        if (currentSpaceValue.equals("X") || currentSpaceValue.equals("O")) {
-            printStream.println("Location already taken, try again!");
-            return false;
-        } else {
-            boardSpaces[row][col] = playerSymbol;
-            draw();
-            return true;
-        }
+        return new Pair<Integer, Integer>(row, col);
+    }
 
+    public String getCurrentSpaceValue(int row, int col) {
+        return boardSpaces[row][col];
     }
 
     public boolean locationIsValid(String location) {
-        int locationInt = Integer.valueOf(location) - 1;
-        int row = locationInt / 3;
-        int col = locationInt % 3;
-        String currentSpaceValue = boardSpaces[row][col];
+        Pair<Integer, Integer> boardLocation = parseLocationFromInput(location);
+        int row = boardLocation.getKey();
+        int col = boardLocation.getValue();
+        String currentSpaceValue = getCurrentSpaceValue(row, col);
         if (currentSpaceValue.equals("X") || currentSpaceValue.equals("O")) {
             return false;
         } else {
             return true;
         }
     }
+
 }

@@ -1,10 +1,8 @@
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.verification.VerificationMode;
 
 import java.io.PrintStream;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 /**
@@ -34,7 +32,7 @@ public class BoardTest {
     public void shouldRedrawBoardWhenFirstPlayerMovesin1() throws Exception {
         String location = "1";
         String playerSymbol = "X";
-        board.redraw(playerSymbol, location);
+        board.placePlayerSymbolOnBoard(playerSymbol, location);
         verify(printStream).println("X|2|3\n-----\n4|5|6\n-----\n7|8|9");
     }
 
@@ -42,7 +40,7 @@ public class BoardTest {
     public void shouldRedrawBoardWhenFirstPlayerMovesin8() throws Exception {
         String location = "8";
         String playerSymbol = "X";
-        board.redraw(playerSymbol, location);
+        board.placePlayerSymbolOnBoard(playerSymbol, location);
         verify(printStream).println("1|2|3\n-----\n4|5|6\n-----\n7|X|9");
     }
 
@@ -50,25 +48,11 @@ public class BoardTest {
     public void shouldRedrawBoardWhenSecondPlayerMovesin8AfterFirstHasMovedin1() throws Exception {
         String location = "1";
         String playerSymbol = "X";
-        board.redraw(playerSymbol, location);
+        board.placePlayerSymbolOnBoard(playerSymbol, location);
         String location2 = "8";
         String playerSymbol2 = "O";
-        board.redraw(playerSymbol2, location2);
+        board.placePlayerSymbolOnBoard(playerSymbol2, location2);
         verify(printStream).println("X|2|3\n-----\n4|5|6\n-----\n7|O|9");
-    }
-
-    @Test
-    public void boardShouldNotAllowPlayer2ToPickOccupiedLocation() throws Exception {
-        board.redraw("X", "1");
-        board.redraw("O", "1");
-        verify(printStream, never()).println("O|2|3\n-----\n4|5|6\n-----\n7|8|9");
-    }
-
-    @Test
-    public void boardShouldYellAtPlayer2WhenTheyPickOccupiedLocation() throws Exception {
-        board.redraw("X", "1");
-        board.redraw("O", "1");
-        verify(printStream).println("Location already taken, try again!");
     }
 
 

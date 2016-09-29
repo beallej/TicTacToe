@@ -34,6 +34,8 @@ public class PlayerTest {
         assertEquals(player.pickLocation(), "1");
     }
 
+
+
     @Test
     public void gameShouldAllowPlayer2ToRepickAfterPickingTakenLocation() throws Exception {
         when(board.locationIsValid("1")).thenReturn(false);

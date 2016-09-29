@@ -21,13 +21,13 @@ public class Player {
     public String pickLocation() {
         printStream.println("Pick a location");
         String locationChosen = "";
-        do {
+        while (!board.locationIsValid(locationChosen)){
             try {
                 locationChosen = bufferedReader.readLine();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } while (!board.locationIsValid(locationChosen));
+        }
         return locationChosen;
     }
 
