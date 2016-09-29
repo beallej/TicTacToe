@@ -2,6 +2,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.BufferedReader;
+import java.io.PrintStream;
 import java.nio.Buffer;
 
 import static org.junit.Assert.*;
@@ -14,10 +15,12 @@ import static org.mockito.Mockito.when;
 public class PlayerTest {
     private Player player;
     private BufferedReader bufferedReader;
+    private PrintStream printStream;
     @Before
     public void setup() {
         bufferedReader = mock(BufferedReader.class);
-        player = new Player(bufferedReader);
+        printStream = mock(PrintStream.class);
+        player = new Player(bufferedReader, printStream);
 
     }
     @Test
