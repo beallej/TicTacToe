@@ -3,12 +3,15 @@
  */
 public class Game {
     private Board board;
+    private Player player1;
 
-    public Game(Board board) {
+    public Game(Board board, Player player1) {
         this.board = board;
+        this.player1 = player1;
     }
 
     public void start() {
         board.draw();
+        player1.makeMove();
     }
 }
