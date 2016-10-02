@@ -3,6 +3,8 @@ import org.junit.Test;
 
 import java.io.PrintStream;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 /**
@@ -55,5 +57,36 @@ public class BoardTest {
         verify(printStream).println("X|2|3\n-----\n4|5|6\n-----\n7|O|9");
     }
 
+    @Test
+    public void shouldReportInvalidOnFilledLocation() throws Exception {
+        board.placePlayerSymbolOnBoard("X", "1");
+        assertFalse(board.locationIsValid("1"));
 
+    }
+
+    @Test
+    public void shouldReportValidOnUnfilledLocation() throws Exception {
+        assertTrue(board.locationIsValid("1"));
+    }
+
+    @Test
+    public void shouldReportFullWhenBoardIsFull() throws Exception {
+        for (int space = 1; space < 10; space ++) {
+            board.placePlayerSymbolOnBoard("X", String.valueOf(space));
+        }
+        assertTrue(board.isFull());
+    }
+
+    @Test
+    public void shouldReportNotFullWhenBoardIsEmpty() throws Exception {
+        assertFalse(board.isFull());
+    }
+
+    @Test
+    public void shouldReportNotFullWhenBoardIsPartiallyFul() throws Exception {
+        for (int space = 1; space < 5; space ++) {
+            board.placePlayerSymbolOnBoard("X", String.valueOf(space));
+        }
+        assertFalse(board.isFull());
+    }
 }

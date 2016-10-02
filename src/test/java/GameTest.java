@@ -1,9 +1,8 @@
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by jbealle on 9/29/16.
@@ -21,6 +20,7 @@ public class GameTest {
         player1 = mock(Player.class);
         player2 = mock(Player.class);
         game = new Game(board, player1, player2);
+        when(board.isFull()).thenReturn(false, false, false, false, true);
 
 
     }
@@ -34,14 +34,39 @@ public class GameTest {
     @Test
     public void firstPlayerShouldBeAskedToMakeMoveAfterBoardDrawn() throws Exception {
         game.start();
-        verify(player1).makeMove();
+        verify(player1, atLeastOnce()).makeMove();
     }
 
 
     @Test
     public void player2ShouldMakeMoveAfterPlayer1(){
         game.start();
-        verify(player2).makeMove();
+        verify(player2, atLeastOnce()).makeMove();
+    }
+
+
+    @Test
+    public void playerOneShouldNotMakeMoveIfBoardIsFull() throws Exception {
+        when(board.isFull()).thenReturn(true);
+        game.start();
+        verify(player1, never()).makeMove();
+
+    }
+
+    @Test
+    public void playerTwoShouldNotMakeMoveIfBoardIsFullInitially() throws Exception {
+        when(board.isFull()).thenReturn(true, true);
+        game.start();
+        verify(player2, never()).makeMove();
+
+    }
+
+    @Test
+    public void playerTwoShouldNotMakeMoveIfBoardBecomesFull() throws Exception {
+        when(board.isFull()).thenReturn(false, true);
+        game.start();
+        verify(player2, never()).makeMove();
+
     }
 
 }

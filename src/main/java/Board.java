@@ -32,13 +32,22 @@ public class Board {
     }
 
     public boolean locationIsValid(String location) {
-        int locationInt = Integer.valueOf(location) - 1;
-        String currentSpaceValue = getCurrentSpaceValue(locationInt);
-        if (currentSpaceValue.equals("X") || currentSpaceValue.equals("O")) {
+        try {
+            int locationInt = Integer.valueOf(location) - 1;
+            String currentSpaceValue = getCurrentSpaceValue(locationInt);
+            return !(currentSpaceValue.equals("X") || currentSpaceValue.equals("O"));
+        }
+        catch (NumberFormatException e) {
             return false;
-        } else {
-            return true;
         }
     }
 
+    public boolean isFull() {
+        for (String location : boardSpaces){
+             if (locationIsValid(location)) {
+                 return false;
+             }
+        }
+        return true;
+    }
 }

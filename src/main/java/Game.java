@@ -14,9 +14,16 @@ public class Game {
 
     public void start() {
         board.draw();
-        player1.makeMove();
-        player2.makeMove();
-
+        Player currentPlayer = player1;
+        Player nextPlayer = player2;
+        while(!board.isFull()) {
+            currentPlayer.makeMove();
+            Player temp = currentPlayer;
+            currentPlayer = nextPlayer;
+            nextPlayer = temp;
+        }
 
     }
+
+
 }
