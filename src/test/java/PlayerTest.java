@@ -3,7 +3,6 @@ import org.junit.Test;
 
 import java.io.BufferedReader;
 import java.io.PrintStream;
-import java.nio.Buffer;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
@@ -18,13 +17,15 @@ public class PlayerTest {
     private BufferedReader bufferedReader;
     private PrintStream printStream;
     private Board board;
+    private String playerSymbol;
 
     @Before
     public void setup() {
         bufferedReader = mock(BufferedReader.class);
         printStream = mock(PrintStream.class);
         board = mock(Board.class);
-        player = new Player(bufferedReader, printStream, board);
+        playerSymbol = "K";
+        player = new Player(bufferedReader, printStream, board, playerSymbol);
 
     }
     @Test
@@ -50,6 +51,33 @@ public class PlayerTest {
         when(board.locationIsValid("8")).thenReturn(true);
         when(bufferedReader.readLine()).thenReturn("1", "8");
         assertEquals(player.pickLocation(), "8");
+    }
+
+
+    @Test
+    public void firstPlayerShouldBeAskedForLocationWhenMakingMove() throws Exception {
+        when(bufferedReader.readLine()).thenReturn("1");
+        when(board.locationIsValid("1")).thenReturn(true);
+        player.makeMove();
+        verify(printStream).println("Pick a location");
+    }
+
+
+
+    @Test
+    public void gameShouldRedrawBoardAfterPlayer1PicksLocation() throws Exception {
+        when(bufferedReader.readLine()).thenReturn("1");
+        when(board.locationIsValid("1")).thenReturn(true);
+        player.makeMove();
+        verify(board).placePlayerSymbolOnBoard(playerSymbol, "1");
+    }
+
+    @Test
+    public void boardShouldBeMarkedWithSameSymbolAsPlayerMakingMove() throws Exception {
+        when(bufferedReader.readLine()).thenReturn("1");
+        when(board.locationIsValid("1")).thenReturn(true);
+        player.makeMove();
+        verify(board).placePlayerSymbolOnBoard(playerSymbol, "1");
     }
 
 

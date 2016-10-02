@@ -10,12 +10,14 @@ public class Player {
     private BufferedReader bufferedReader;
     private PrintStream printStream;
     private Board board;
+    private String playerSymbol;
 
-    public Player(BufferedReader bufferedReader, PrintStream printStream, Board board) {
+    public Player(BufferedReader bufferedReader, PrintStream printStream, Board board, String playerSymbol) {
 
         this.bufferedReader = bufferedReader;
         this.printStream = printStream;
         this.board = board;
+        this.playerSymbol = playerSymbol;
     }
 
     public String pickLocation() {
@@ -37,4 +39,9 @@ public class Player {
     }
 
 
+    public void makeMove() {
+
+        String location = this.pickLocation();
+        board.placePlayerSymbolOnBoard(playerSymbol, location);
+    }
 }

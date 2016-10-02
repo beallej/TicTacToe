@@ -32,32 +32,16 @@ public class GameTest {
     }
 
     @Test
-    public void firstPlayerShouldBeAskedForLocationAfterBoardDrawn() throws Exception {
+    public void firstPlayerShouldBeAskedToMakeMoveAfterBoardDrawn() throws Exception {
         game.start();
-        verify(player1).pickLocation();
+        verify(player1).makeMove();
     }
+
 
     @Test
-    public void gameShouldRedrawBoardAfterPlayer1PicksLocation() throws Exception {
-        when(player1.pickLocation()).thenReturn("1");
+    public void player2ShouldMakeMoveAfterPlayer1(){
         game.start();
-        verify(board).placePlayerSymbolOnBoard("X", "1");
+        verify(player2).makeMove();
     }
-
-    @Test
-    public void gameShouldPromptPlayer2ForLocationAfterPlayer1Goes() throws Exception {
-        when(player1.pickLocation()).thenReturn("1");
-        game.start();
-        verify(player2).pickLocation();
-    }
-
-    @Test
-    public void gameShouldRedrawBoardAfterPlayer2PicksLocationAfterPlayer1() throws Exception {
-        when(player1.pickLocation()).thenReturn("1");
-        when(player2.pickLocation()).thenReturn("8");
-        game.start();
-        verify(board).placePlayerSymbolOnBoard("O", "8");
-    }
-
 
 }
