@@ -7,56 +7,33 @@ import java.io.PrintStream;
  */
 public class Board {
     private PrintStream printStream;
-    private String[][] boardSpaces;
+    private String[] boardSpaces;
 
     public Board(PrintStream printStream) {
         this.printStream = printStream;
-        this.boardSpaces = new String[][]{{"1", "2", "3"}, {"4", "5", "6"}, {"7", "8", "9"}};
+        this.boardSpaces = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9"};
     }
 
     public void draw() {
-        String bd = "";
-        for (int rowNum = 0; rowNum < boardSpaces.length; rowNum ++){
-            String[] row = boardSpaces[rowNum];
-            for (int colNum = 0; colNum < row.length; colNum++){
-                bd += boardSpaces[rowNum][colNum];
-                if (colNum < 2){
-                    bd += "|";
-                }
-            }
-            if (rowNum < 2) {
-                bd += "\n-----\n";
-            }
-        }
-
+        String bd = String.format("%s|%s|%s\n-----\n%s|%s|%s\n-----\n%s|%s|%s", boardSpaces);
         printStream.println(bd);
     }
 
     public void placePlayerSymbolOnBoard(String playerSymbol, String location) {
 
-        Pair<Integer, Integer> boardLocation = parseLocationFromInput(location);
-        int row = boardLocation.getKey();
-        int col = boardLocation.getValue();
-        boardSpaces[row][col] = playerSymbol;
+        int locationInt = Integer.valueOf(location) - 1;
+        boardSpaces[locationInt] = playerSymbol;
         draw();
     }
 
-    public Pair<Integer, Integer> parseLocationFromInput(String location){
-        int locationInt = Integer.valueOf(location) - 1;
-        int row = locationInt / 3;
-        int col = locationInt % 3;
-        return new Pair<Integer, Integer>(row, col);
-    }
 
-    public String getCurrentSpaceValue(int row, int col) {
-        return boardSpaces[row][col];
+    public String getCurrentSpaceValue(int location) {
+        return boardSpaces[location];
     }
 
     public boolean locationIsValid(String location) {
-        Pair<Integer, Integer> boardLocation = parseLocationFromInput(location);
-        int row = boardLocation.getKey();
-        int col = boardLocation.getValue();
-        String currentSpaceValue = getCurrentSpaceValue(row, col);
+        int locationInt = Integer.valueOf(location) - 1;
+        String currentSpaceValue = getCurrentSpaceValue(locationInt);
         if (currentSpaceValue.equals("X") || currentSpaceValue.equals("O")) {
             return false;
         } else {
